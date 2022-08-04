@@ -8,11 +8,21 @@ def index():
     return "<h1>Hello World!</h1>"
 
 
+@app.route('/orders')
+def orders():
+    res = db.query("SELECT * FROM orders LIMIT 1")
+    return res
+
+
+@app.route('/products')
+def customers():
+    res = db.query("SELECT * FROM products LIMIT 1")
+    return res
+
+
 @app.route('/sellers')
 def sellers():
-    db = DBConnection()
-    res = db.query("SELECT * FROM sellers_dataset LIMIT 1")
-
+    res = db.query("SELECT * FROM sellers LIMIT 1")
     return res
 
 
@@ -31,6 +41,7 @@ def not_found(error=None):
 # 7:30 PM -9:00
 if __name__ == "__main__":
     from waitress import serve
+    db = DBConnection()
     serve(app, host="0.0.0.0", port=8080)
 
 

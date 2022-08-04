@@ -15,25 +15,33 @@ class DBConnection:
         return cls._instance
 
     def __init__(self):
-        self.conn = self.create_connection()
+        self.conn = None
 
     def create_connection(self):
-        try:
-            engine = create_engine(
-                f"mysql://{conf.db_username}:{conf.db_pwd}@{conf.db_host}:{conf.db_port}/{conf.db_name}?charset=utf8mb4")
-            return engine.connect()
-        except Exception as e:
-            print(e)
+        if not self.conn:
+            try:
+                engine = create_engine(
+                    f"mysql://{conf.db_username}:{conf.db_pwd}@{conf.db_host}:{conf.db_port}/{conf.db_name}?charset=utf8mb4")
+                self.conn = engine.connect()
+            except Exception as e:
+                print(e)
 
     def query(self, query):
         response = None
+        self.create_connection()
         try:
             rows = self.conn.execute(query)
             response = jsonify([dict(r) for r in rows])
             response.status_code = 200
         except Exception as e:
             print(e)
+        finally:
+            self.close_connection()
         return response
 
     def close_connection(self):
-        self.conn = self.conn.close()
+        if self.conn:
+            try:
+                self.conn.close()
+            except Exception as e:
+                print(f"There was an issue while closing the connection: {e}")
