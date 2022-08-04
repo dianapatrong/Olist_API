@@ -1,3 +1,7 @@
 pandas
 sqlalchemy
 mysqlclient
+flask
+waitress
+flask_mysqldb
+pymysql

@@ -1,9 +1,9 @@
 import os
 import pandas as pd
-import config as conf
+import src.config as conf
 from sqlalchemy import create_engine
 
-#ALTER DATABASE olist_ecommerce CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
 engine = create_engine(f"mysql://{conf.db_username}:{conf.db_pwd}@{conf.db_host}:{conf.db_port}/{conf.db_name}?charset=utf8mb4")
 con = engine.connect()
 
