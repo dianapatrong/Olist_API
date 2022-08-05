@@ -1,4 +1,5 @@
 import math
+from flask import jsonify
 
 
 class Pagination:
@@ -39,7 +40,8 @@ class Pagination:
 
     def _get_page_offset(self, offset):
         try:
-            return self.pages[self.pages.index(self.current_page + offset)]
+            offset = self.pages.index(self.current_page + offset)
+            return self.pages[offset]
         except ValueError:
             return None
 

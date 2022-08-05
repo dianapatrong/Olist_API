@@ -50,3 +50,5 @@ class DBConnection:
                 self.conn = None
             except Exception as e:
                 print(f"There was an issue while closing the connection: {e}")
+    def build_response(self):
+        pass
