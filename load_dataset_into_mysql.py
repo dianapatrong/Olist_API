@@ -11,7 +11,7 @@ path = "olist_dataset"
 for file in os.listdir(path):
     filename = f"{path}/{file}"
     table_name = file.replace("olist_", "").replace("_dataset.csv", "")
-    print(f"Loading {path}/{file} into {table_name} tableName")
+    print(f"Loading {path}/{file} into {table_name} table")
     df = pd.read_csv(filename)
     df.to_sql(con=con, name=table_name, index=False, if_exists="replace")
 

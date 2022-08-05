@@ -26,12 +26,16 @@ class DBConnection:
             except Exception as e:
                 print(e)
 
-    def query(self, query):
-        response = None
+    def query(self, query, metadata=None):
+        response = {}
         self.create_connection()
         try:
             rows = self.conn.execute(query)
-            response = jsonify([dict(r) for r in rows])
+            rows = [dict(r) for r in rows]
+            response["data"] = rows
+            if metadata:
+                response["metadata"] = metadata
+            response = jsonify(response)
             response.status_code = 200
         except Exception as e:
             print(e)
@@ -43,5 +47,6 @@ class DBConnection:
         if self.conn:
             try:
                 self.conn.close()
+                self.conn = None
             except Exception as e:
                 print(f"There was an issue while closing the connection: {e}")
