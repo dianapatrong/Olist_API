@@ -13,6 +13,7 @@ TABLE_INFO = {
     "orders": {"ROWS_PER_PAGE": 2000, "TOTAL_ROWS": 99441}
 }
 
+# ToDo: Add Auth login
 @app.route("/")
 def index():
     return "<h1>Hello World!</h1>"
